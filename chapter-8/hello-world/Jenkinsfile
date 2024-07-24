@@ -12,26 +12,19 @@ metadata:
   namespace: pga-cicdpoc-ta
 spec:
   containers:
-    - name: node
-      image: devops.digital.belgium.be:1443/jenkins-node:latest
-      command:
-        - sleep
-      args:
-        - 99d
-
     - name: sonar-scanner-cli
       image: devops.digital.belgium.be:1443/jenkins-sonar-scanner-cli:latest
       command:
         - sleep
       args:
-        - 99d
+        - 9h
 
     - name: kaniko
       image: devops.digital.belgium.be:1443/jenkins-executor:debug
       command:
         - sleep
       args:
-        - 99d
+        - 9h
       volumeMounts:
         - name: kaniko-secret
           mountPath: /kaniko/.docker
@@ -46,6 +39,12 @@ spec:
           - key: .dockerconfigjson
             path: config.json
             '''
+        }
+    }
+
+    stage('Checkout') {
+        steps {
+            checkout scm
         }
     }
 
