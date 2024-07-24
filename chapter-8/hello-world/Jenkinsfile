@@ -42,12 +42,6 @@ spec:
         }
     }
 
-    stage('Checkout') {
-        steps {
-            checkout scm
-        }
-    }
-
     stages {
         stage('Unit testing') {
             steps {
