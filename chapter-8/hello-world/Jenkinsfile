@@ -9,6 +9,7 @@ kind: Pod
 metadata:
   # Note: The name and possibly namespace for the Pod should be added here.
   name: ci-pod
+  namespace: pga-cicdpoc-ta
 spec:
   containers:
     - name: node
