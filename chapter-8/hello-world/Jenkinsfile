@@ -13,21 +13,21 @@ metadata:
 spec:
   containers:
     - name: node
-      image: node:latest
+      image: devops.digital.belgium.be:1443/jenkins-node:latest
       command:
         - sleep
       args:
         - 99d
 
     - name: sonar-scanner-cli
-      image: sonarsource/sonar-scanner-cli:latest
+      image: devops.digital.belgium.be:1443/jenkins-sonar-scanner-cli:latest
       command:
         - sleep
       args:
         - 99d
 
     - name: kaniko
-      image: gcr.io/kaniko-project/executor:debug
+      image: devops.digital.belgium.be:1443/jenkins-executor:debug
       command:
         - sleep
       args:
@@ -41,7 +41,7 @@ spec:
   volumes:
     - name: kaniko-secret
       secret:
-        secretName: artifactory-credentials
+        secretName: nexus-credentials
         items:
           - key: .dockerconfigjson
             path: config.json
