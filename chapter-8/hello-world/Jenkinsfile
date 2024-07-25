@@ -12,6 +12,13 @@ metadata:
   namespace: pga-cicdpoc-ta
 spec:
   containers:
+    - name: node
+      image: devops.digital.belgium.be:1443/jenkins-node:latest
+      command:
+        - sleep
+      args:
+        - 9h
+
     - name: sonar-scanner-cli
       image: devops.digital.belgium.be:1443/jenkins-sonar-scanner-cli:latest
       command:
