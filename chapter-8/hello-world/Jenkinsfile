@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             // Use a label to distinguish this pod template
-            label 'ci-template'
+            inheritFrom 'agent'
             yaml '''
 apiVersion: v1
 kind: Pod
@@ -54,6 +54,9 @@ spec:
             steps {
                 container('node') {
                     sh '''
+                        whoami
+                        pwd
+                        ls -al
                         cd ./backend/
                         npm install
                         npm run test
