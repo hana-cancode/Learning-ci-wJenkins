@@ -49,8 +49,8 @@ spec:
                     steps {
                         container(name: 'kaniko', shell: '/busybox/sh') {
                             sh '''#!/busybox/sh
-                                VERSION=$(grep '"version":' ./backend/package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g')
-                                /kaniko/executor --context `pwd`/frontend --dockerfile=Dockerfile --insecure --skip-tls-verify --insecure-registry nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be --skip-tls-verify-registry nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be --destination=nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be/lab-frontend:$VERSION-$BUILD_NUMBER --image-name-with-digest-file=frontend-image-file
+                                VERSION=$(grep '"version":' ./chapter-8/hello-world/backend/package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g')
+                                /kaniko/executor --context ./chapter-8/hello-world/frontend --dockerfile=Dockerfile --insecure --skip-tls-verify --insecure-registry nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be --skip-tls-verify-registry nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be --destination=nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be/lab-frontend:$VERSION-$BUILD_NUMBER --image-name-with-digest-file=frontend-image-file
                             '''
                         }
                     }
@@ -60,8 +60,8 @@ spec:
                     steps {
                         container(name: 'kaniko', shell: '/busybox/sh') {
                             sh '''#!/busybox/sh
-                                VERSION=$(grep '"version":' ./backend/package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g')
-                                /kaniko/executor --context `pwd`/backend --dockerfile=Dockerfile --insecure --skip-tls-verify --insecure-registry nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be --skip-tls-verify-registry nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be --destination=nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be/lab-backend:$VERSION-$BUILD_NUMBER --image-name-with-digest-file=backend-image-file
+                                VERSION=$(grep '"version":' ./chapter-8/hello-world/backend/package.json | head -1 | awk -F: '{ print $2 }' | sed 's/[", ]//g')
+                                /kaniko/executor --context ./chapter-8/hello-world/backend --dockerfile=Dockerfile --insecure --skip-tls-verify --insecure-registry nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be --skip-tls-verify-registry nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be --destination=nexus-pga-cicdpoc-ta.apps.bosa-dt-04.paas.cloud.dt.bosa.fgov.be/lab-backend:$VERSION-$BUILD_NUMBER --image-name-with-digest-file=backend-image-file
                             '''
                         }
                     }
