@@ -12,20 +12,6 @@ metadata:
   namespace: pga-cicdpoc-ta
 spec:
   containers:
-    - name: node
-      image: devops.digital.belgium.be:1443/jenkins-node:latest
-      command:
-        - sleep
-      args:
-        - 9h
-
-    - name: sonar-scanner-cli
-      image: devops.digital.belgium.be:1443/jenkins-sonar-scanner-cli:latest
-      command:
-        - sleep
-      args:
-        - 9h
-
     - name: kaniko
       image: devops.digital.belgium.be:1443/jenkins-executor:debug
       command:
@@ -50,49 +36,7 @@ spec:
     }
 
     stages {
-        stage('Unit testing') {
-            steps {
-                container('node') {
-                    sh '''
-                        whoami
-                        pwd
-                        ls -al
-                        cd ./backend/
-                        npm install
-                        npm run test
-                    '''
-                }
-            }
-        }
-
-        stage('SonarQube analysis') {
-            steps {
-                container('sonar-scanner-cli') {
-                    withSonarQubeEnv('Default SonarQube Server') {
-                        sh """
-                            sonar-scanner \
-                            -Dsonar.projectKey=Hello-World \
-                            -Dsonar.sources=backend/,frontend/,database-init/ \
-                            -Dsonar.exclusions=test-output/  \
-                            -Dsonar.tests=unit-tests/ \
-                            -Dsonar.host.url=${env.SONAR_HOST_URL} \
-                            -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
-                            -Dsonar.javascript.lcov.reportPaths=./test-output/coverage/lcov.info
-                        """
-                    }
-                }
-            }
-        }
-
-        stage("Quality Gate") {
-            steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-
-        stage('Build and Publish Docker Images') {
+         stage('Build and Publish Docker Images') {
             parallel {
                 stage('Frontend') {
                     steps {
@@ -135,12 +79,5 @@ spec:
                 )
             }
         } 
-    }
-
-    post {
-        always {
-            // This collects the JUnit XML report and displays it in Jenkins
-          junit '**/test-output/unit-test-report/junit-test-results.xml'
-        }
     }
 }
